@@ -1,0 +1,9 @@
+C:\Users\dyeh\Documents\Visual Studio 2015\Projects\Serial2Socket\Serial2Socket\bin\Release\Serial2Socket.exe
+C:\Users\dyeh\Documents\Visual Studio 2015\Projects\Serial2Socket\Serial2Socket\bin\Release\Serial2Socket.pdb
+C:\Users\dyeh\Documents\Visual Studio 2015\Projects\Serial2Socket\Serial2Socket\obj\Release\Serial2Socket.Form1.resources
+C:\Users\dyeh\Documents\Visual Studio 2015\Projects\Serial2Socket\Serial2Socket\obj\Release\Serial2Socket.ProjectInstaller.resources
+C:\Users\dyeh\Documents\Visual Studio 2015\Projects\Serial2Socket\Serial2Socket\obj\Release\Serial2Socket.csproj.GenerateResource.cache
+C:\Users\dyeh\Documents\Visual Studio 2015\Projects\Serial2Socket\Serial2Socket\obj\Release\Serial2Socket.csproj.CoreCompileInputs.cache
+C:\Users\dyeh\Documents\Visual Studio 2015\Projects\Serial2Socket\Serial2Socket\obj\Release\Serial2Socket.exe
+C:\Users\dyeh\Documents\Visual Studio 2015\Projects\Serial2Socket\Serial2Socket\obj\Release\Serial2Socket.pdb
+C:\Users\dyeh\Documents\Visual Studio 2015\Projects\Serial2Socket\Serial2Socket\bin\Release\Resource\Setting.txt

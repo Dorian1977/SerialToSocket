@@ -1,4 +1,3 @@
-#define USE_TCP
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +13,6 @@ namespace Serial2Socket
     public class SerialPortControl
     {
         TcpTimeServer tcpTimeServer = null;
-
         private SerialPort serialPort = null;
         
         /******************************************************************

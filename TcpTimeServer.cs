@@ -13,11 +13,18 @@ namespace Serial2Socket
         private Thread n_send_server;
         private TcpListener listener;
         private TcpClient client;
-         private int _port;
+        private int _port;
         byte[] bufferSend = new byte[4096];
         private string _data = "";
         private readonly object _lockObj = new object();
 
+        /******************************************************************
+        purpose: initial tcp ip port
+        parameter:
+             Input: serialPort - serial port ip address
+                    port - com port information
+             Output: 
+        ********************************************************************/
         public TcpTimeServer(SerialPortControl serialPort, int port)
         {
             _port = port;
@@ -26,7 +33,11 @@ namespace Serial2Socket
             Server();           
         }
 
-        //string strReceiveIPData = "";
+        /******************************************************************
+        purpose: Implement tcp server, listen and receive the tcpip data, 
+                 then send data to com port
+        parameter:
+        ********************************************************************/
         public void Server()
         {                   
             // Buffer for reading data
@@ -69,49 +80,34 @@ namespace Serial2Socket
                     listener.Start();
                 }
             }
-            
         }
-
+        
+        /******************************************************************
+        purpose: if tcpip port is connected, send data through this port
+        parameter:
+             Input: data - through data through tcpip
+             Output:
+        ********************************************************************/
         public void sendData(string data)
         {
-#if true
             if (client != null && client.Connected)
             {
                 NetworkStream stream = client.GetStream();
                 bufferSend = Encoding.ASCII.GetBytes(data);
                 stream.Write(bufferSend, 0, bufferSend.Length);
             }
-#else
-            _data = data;
-            n_send_server = new Thread(new ThreadStart(send));
-            n_send_server.IsBackground = true;
-            n_send_server.Start();           
-#endif
         }
-#if false
-        private void send()
-        {
-            try
-            {                
-                if (client != null)
-                {
-                    NetworkStream stream = client.GetStream();
-                    bufferSend = Encoding.ASCII.GetBytes(_data);
-                    stream.Write(bufferSend, 0, bufferSend.Length);
-                    Thread.Sleep(10);                 
-                    stream.Flush();
-                }
-            }
-            catch (Exception exp) { Trace.WriteLine(DateTime.Now + " SEND exception: " + exp); }
-        }
-#endif
+
+        /******************************************************************
+        purpose: stop the tcpip service
+        parameter:
+        ********************************************************************/
         public void stop()
         {
             client.Close();
             listener.Stop();
             n_send_server.Abort();
         }
-      
     }
 }
 

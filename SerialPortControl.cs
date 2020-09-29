@@ -1,5 +1,3 @@
-﻿//#define USE_TCP_SCOKET
-//#define USE_UDP
 #define USE_TCP
 using System;
 using System.Collections.Generic;
@@ -18,7 +16,22 @@ namespace Serial2Socket
         TcpTimeServer tcpTimeServer = null;
 
         private SerialPort serialPort = null;
+        
+        /******************************************************************
+        purpose: default constructor
+        parameters:
+        ********************************************************************/
         public SerialPortControl() { }
+        
+        /******************************************************************
+        purpose: initial and look through all the com port, return true is 
+                 the com port is found and open successfully, otherwise  
+                 return false
+        parameter:
+             Input: com port in string 
+             Output:  true for open com port successful
+                      false for open com port failed
+        ********************************************************************/
         public bool openComPort(string _port)
         {
             bool portState = false;
@@ -61,33 +74,49 @@ namespace Serial2Socket
             return false;
         }
 
+        /******************************************************************
+        purpose: return the com port flag status 
+        parameter:
+             Input: 
+             Output:  true if com port is opened  
+                      false if com port is not opened
+        ********************************************************************/
         public bool IsPortOpen()
         {
             return serialPort.IsOpen;
         }
 
+        /******************************************************************
+        purpose: close the com port 
+        parameter:
+        ********************************************************************/
         public void port_Close()
         {
             serialPort.Close();
         }
-        /*
-        public void port_write(string data)
-        {         
-            if (serialPort.IsOpen)
-            {
-                serialPort.WriteLine(data);
-            }
-        }*/
-
+        
+        /******************************************************************
+        purpose: if com port is opened, send data through the com port 
+        parameter:
+             Input: buffer - data buffer in bytes like to send out
+                    count - number of bytes in the buffer
+             Output:
+        ********************************************************************/
         public void port_write(byte[] buffer, int count)
         {
             if (serialPort.IsOpen)
             {
                 SendDataToInkSystem(buffer, count);
-                //port.Write(buffer, offset, count);
             }         
         }
 
+        /******************************************************************
+        purpose: send data to embedded ink device, 2 bytes / once
+        parameter:
+             Input: data - byte array of data like to send to ink device
+                    size - number of bytes in data array
+             Output:  always true
+        ********************************************************************/
         public bool SendDataToInkSystem(byte[] data, int size)
         {
             serialPort.DiscardInBuffer();
@@ -105,11 +134,25 @@ namespace Serial2Socket
             return true;
         }
 
+        /******************************************************************
+        purpose: bypass the exterial TCP server handler to local variable
+        parameter:
+             Input: _tcpTimeServer: tcp time server handler
+             Output: 
+        ********************************************************************/
         public void readTCPListener(TcpTimeServer _tcpTimeServer)
         {
             tcpTimeServer = _tcpTimeServer;
         }
 
+        /******************************************************************
+        purpose: read the data from the serial port and send them out through
+                 TCP port
+        parameter:
+             Input: sender - the source of the event
+                    e - encapsulates any additional information about the event
+             Output:  
+        ********************************************************************/
         private void port_DataReceived(object sender, SerialDataReceivedEventArgs e)
         {
             byte[] buffer = new byte[255];
@@ -119,9 +162,7 @@ namespace Serial2Socket
             if (tcpTimeServer != null)
             {
                 tcpTimeServer.sendData(message);
-
             }
-
         }
     }
 }
